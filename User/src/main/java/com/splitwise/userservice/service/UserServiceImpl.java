@@ -2,7 +2,7 @@ package com.splitwise.userservice.service;
 
 import com.splitwise.userservice.entity.User;
 import com.splitwise.userservice.entity.UserCredentials;
-import com.splitwise.userservice.pojo.UserDetailsDTO;
+import com.splitwise.userservice.pojo.RegistrationDetailsDTO;
 import com.splitwise.userservice.repo.UserCredentialsRepo;
 import com.splitwise.userservice.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User createUser(UserDetailsDTO userDetailDTO) {
+    public User createUser(RegistrationDetailsDTO userDetailDTO) {
 
         User user = new User();
         user.setAge(userDetailDTO.getAge());

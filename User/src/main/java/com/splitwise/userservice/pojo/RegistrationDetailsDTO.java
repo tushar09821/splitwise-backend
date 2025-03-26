@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class UserDetailsDTO {
-    private String FirstName;
-    private String LastName;
+public class RegistrationDetailsDTO {
+    private String firstName;
+    private String lastName;
     private String email;
     private String contact;
     private int age;
