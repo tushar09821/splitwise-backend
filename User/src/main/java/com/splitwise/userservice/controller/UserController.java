@@ -30,7 +30,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody RegistrationDetailsDTO userDetailDTO){
         User user = userService.createUser(userDetailDTO);
 
-      return ResponseEntity.ok("Created Sucessfully \n" + user);
+      return ResponseEntity.ok("Created sucessfully \n" + user);
     }
 
     @PatchMapping("/{userId}/updateGroup/{groupId}")
@@ -43,6 +43,7 @@ public class UserController {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(),loginRequestDTO.getPassword())
         );
+        System.out.println(authentication);
         return ResponseEntity.ok("DOne");
     }
 

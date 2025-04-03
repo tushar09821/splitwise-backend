@@ -6,6 +6,7 @@ import com.splitwise.userservice.pojo.RegistrationDetailsDTO;
 import com.splitwise.userservice.repo.UserCredentialsRepo;
 import com.splitwise.userservice.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserCredentialsRepo userCredentialsRepo;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public User findByID(int id) {
         return userRepo.findById(id).get();
@@ -35,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
         UserCredentials userCredentials = new UserCredentials();
         userCredentials.setUsername(userDetailDTO.getUsername());
-        userCredentials.setPassword(userDetailDTO.getPassword());
+        userCredentials.setPassword(bCryptPasswordEncoder.encode(userDetailDTO.getPassword()));
         userCredentialsRepo.save(userCredentials);
 
         user.setUserCredentials(userCredentials);
@@ -44,4 +47,6 @@ public class UserServiceImpl implements UserService{
 
         return user;
     }
+
+
 }
