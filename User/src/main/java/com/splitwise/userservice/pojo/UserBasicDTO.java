@@ -17,7 +17,7 @@ public class UserBasicDTO {
     private String contact;
     private int age;
     private Date dateOfBirth;
-
+    private String username;
     private List<Integer> groupsList;
 
 }

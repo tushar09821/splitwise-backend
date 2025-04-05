@@ -1,6 +1,7 @@
 package com.splitwise.userservice.configuration;
 
 import com.splitwise.userservice.filter.JsonWebAuthFilter;
+import com.splitwise.userservice.filter.JwtFilter;
 import com.splitwise.userservice.service.LoginUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,9 @@ public class SecurityConfiguration {
     @Autowired
     UserDetailsService userDetailsService;
 
+    @Autowired
+    JwtFilter jwtFilter;
+
    @Bean
     public SecurityFilterChain getFilterChain(HttpSecurity httpSecurity, JsonWebAuthFilter jsonWebAuthFilter) throws Exception {
         return httpSecurity
@@ -39,6 +43,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jsonWebAuthFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

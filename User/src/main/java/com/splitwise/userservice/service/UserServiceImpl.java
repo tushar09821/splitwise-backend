@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(RegistrationDetailsDTO userDetailDTO) {
-
+        //  CheckIfPresent(userDetailDTO.getUsername());
         User user = new User();
         user.setAge(userDetailDTO.getAge());
         user.setEmail(userDetailDTO.getEmail());
