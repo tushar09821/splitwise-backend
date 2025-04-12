@@ -22,7 +22,7 @@ public class Expenses {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ExpenseId;
+    private Integer expenseId;
     private String name;
     private Integer paidByUser;
     private Float amount;

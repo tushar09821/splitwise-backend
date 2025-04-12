@@ -3,6 +3,9 @@ package com.splitwise.expenses.controller;
 import com.splitwise.expenses.model.Expenses;
 import com.splitwise.expenses.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,35 +22,50 @@ public class ExpenseController {
     ExpenseService service;
 
     @GetMapping("/all")
-    public List<Expenses> allExpenses(){
-        return service.allExpenses();
+    public ResponseEntity<List<Expenses>> allExpenses(){
+
+        List<Expenses>expense1=service.allExpenses();
+        if(expense1!=null)
+            return new ResponseEntity<>(expense1, HttpStatus.FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("/{key}")
-    public Optional<Expenses> getById(@PathVariable Integer key){
-        return service.getById(key);
+    public ResponseEntity<Optional<Expenses>> getById(@PathVariable Integer key){
+
+        Optional<Expenses> result= service.getById(key);
+        if(result.isPresent())
+            return new ResponseEntity<>(result, HttpStatus.FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/add")
-    public String addExpense(@RequestBody Expenses expense){
+    public ResponseEntity<String> addExpense(@RequestBody Expenses expense){
         service.addExpense(expense);
-        return "Success";
+        return new ResponseEntity<>("Success",HttpStatus.ACCEPTED);
     }
     @DeleteMapping("/{key}")
-    public String removeExpense(@PathVariable Integer key){
+    public ResponseEntity<String> removeExpense(@PathVariable Integer key){
         Optional<Expenses> expense1=service.getById(key);
         if(expense1.isPresent()) {
             service.removeExpense(key);
-            return "Success";
+            return new ResponseEntity<>("Success",HttpStatus.ACCEPTED);
         }
         else{
-            return "Expense not available";
+            return new ResponseEntity<>("Expense not available",HttpStatus.NOT_FOUND);
         }
 
     }
 
     @GetMapping("/group/{groupId}")
-    public List<Integer> searchByGroup(@PathVariable Integer groupId){
-        return service.searchByGroup(groupId);
+    public ResponseEntity<List<Integer>> searchByGroup(@PathVariable Integer groupId){
+        List<Integer> result=service.searchByGroup(groupId);
+        if(result!=null)
+            return new ResponseEntity<>(result,HttpStatus.FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
